@@ -15,7 +15,7 @@ const itemsFromBackend = [
     id: uuidv4(),
     content: 'Two',
     title: 'Second task',
-    startDate: new Date(2023, 7, 8),
+    startDate: new Date(2022, 7, 8),
     endDate: new Date(2023, 9, 8),
     progress: 20
   },
@@ -48,23 +48,23 @@ const taskStore = (set, get) => {
   return {
     itemsFromBackend,
     columnsFromBackend: {
-      [uuidv4()]: {
+      columnBacklog: {
         name: 'Backlog',
         items: [...itemsFromBackend] // Sao chép mảng itemsFromBackend vào cột 'Backlog'
       },
-      [uuidv4()]: {
+      columnTodo: {
         name: 'To-Do',
         items: []
       },
-      [uuidv4()]: {
+      columnProgress: {
         name: 'In Progress',
         items: []
       },
-      [uuidv4()]: {
+      columnReview: {
         name: 'Review',
         items: []
       },
-      [uuidv4()]: {
+      columnDone: {
         name: 'Done',
         items: []
       }
@@ -102,7 +102,7 @@ const taskStore = (set, get) => {
     addItemToColumn: (content) => {
       const newItem = {
         id: uuidv4(),
-        content: content
+        title: content
       }
       set((state) => {
         // Tìm cột có name là 'Backlog'
@@ -111,7 +111,7 @@ const taskStore = (set, get) => {
         if (!backlogColumn) return state
         // Thêm newItem vào mảng items của cột 'Backlog'
         backlogColumn.items.push(newItem)
-        itemsFromBackend.push(newItem)
+        // itemsFromBackend.push(newItem)
 
         console.log(state)
         return state

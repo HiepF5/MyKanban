@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './Progress.css';
 
 function Progress({item}) {
-   console.log(item)
+  // console.log(item)
   const [progress, setProgress] = useState(item); 
   // Giả sử ban đầu là 0%
   const handleProgressChange = (event) => {
@@ -12,12 +12,12 @@ function Progress({item}) {
 
   const progressBarStyle = {
     width: `${progress}%`,
-    background: `linear-gradient(to right, green ${progress}%, gray ${progress}% 100%)`,
+    background: progress > 40 ? `linear-gradient(to right, green ${progress}%, gray ${progress}%)` : 'linear-gradient(to right, red 20%, yellow 20% 100%)',
   };
 
   return (
     <div className="App">
-      <p>React Progress Bar</p>
+      <p>Progress Bar</p>
       <input
         type="range"
         min="0"
@@ -26,7 +26,7 @@ function Progress({item}) {
         onChange={handleProgressChange}
       />
       <div className="progress-bar">
-        <div className="progress" style={progressBarStyle}></div>
+        <div className="progress" style={progressBarStyle} ></div>
       </div>
       <p>{progress}% Complete</p>
     </div>

@@ -1,16 +1,24 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Draggable } from 'react-beautiful-dnd'
 import { styled } from 'styled-components'
 import trash from '../assets/trash-2.svg'
 import edit from '../assets/edit-btn.svg'
+import chevron from '../assets/chevron.svg'
+import chevronTop from '../assets/chevron-top.svg'
 import { useTaskStore } from '../../Store/TaskStore'
 import Progress from './Progress'
+import Date from './Date'
+import DateTask from './DateTask'
 const TaskTitle = styled.div`
+  position: relative;
   color: white;
+  margin: 0 0 20px 0;
+  margin-bottom: 20px;
   user-select: none;
   padding: 16px;
-  margin: 0 0 8px 0;
-  min-height: 50px;
+  background-color: rgb(155 208 139);
+  // transition: width 2s, height 4s;
+  
 `
 const TaskName = styled.div`
   background: white;
@@ -28,15 +36,31 @@ const TaskImg = styled.img`
   height: 1.25rem;
   cursor: pointer;
 `
-const TaskTitleItem =  styled.div`
-  margin-bottom: 5px
+const TaskTitleItem = styled.div`
+  margin-bottom: 12px;
 `
-export default function Task({item, index}) {
-  const formattedStartDate= useTaskStore((state)=>state.formattedStartDate(index))
-  const formattedEndDate= useTaskStore((state)=>state.formattedEndDate(index))
-  const currentDate = new Date()
+const ShowDetail = styled.button`
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  padding: 3px 6px;
+  outline: none;
+  border: none;
+  &:active,
+  &:focus {
+    outline: none;
+  }
+`
+export default function Task({ item, index }) {
+  // const formattedStartDate= useTaskStore((state)=>state.formattedStartDate(index))
+  // const formattedEndDate= useTaskStore((state)=>state.formattedEndDate(index))
+  // const currentDate = new Date()
   // const [day, month, year] = [currentDate.getDate(), currentDate.getMonth() + 1, currentDate.getFullYear()]
   // const time = `Ngày: ${day}, Tháng: ${month}, Năm: ${year}`
+  const [show, setShow] = useState(false)
+  const toggleShow = () => {
+    setShow(!show)
+  }
   return (
     <Draggable draggableId={item.id} index={index}>
       {(provided, snapshot) => {
@@ -46,11 +70,16 @@ export default function Task({item, index}) {
             {...provided.draggableProps}
             {...provided.dragHandleProps}
             style={{
-              backgroundColor: snapshot.isDragging ? '#263B4A' : '#456C86',
+              backgroundColor: snapshot.isDragging ? '#4ba20e' : '#89db4e',
+              height: show? 'auto': '20px',
+              overflow: show ? 'auto': 'hidden',
               ...provided.draggableProps.style
             }}
           >
             <TaskTitleItem>{item.title}</TaskTitleItem>
+            <ShowDetail onClick={toggleShow}>
+              {show ? <TaskImg src={chevron} /> : <TaskImg src={chevronTop} />}
+            </ShowDetail>
             <TaskName>
               <div>
                 <TaskImg src={trash} />
@@ -58,11 +87,14 @@ export default function Task({item, index}) {
               </div>
               <div> {item.content}</div>
             </TaskName>
-            <div>Ngày bắt đầu : {formattedStartDate}</div>
-            <div>Ngày kết thúc : {formattedEndDate}</div>
+            {/* <div>Ngày bắt đầu : {formattedStartDate}</div>
+            <div>Ngày kết thúc : {formattedEndDate}</div> */}
+            <DateTask startDateInput={item.startDate} endDateInput={item.endDate} />
             <div>Tiến độ xử lí: {item.progress}</div>
-            {console.log(item)}
-            <Progress item={item.progress}/>
+            {/* {console.log(item)} */}
+            <Progress item={item.progress} />
+            {/* <Date/> */}
+            {/* <Date/> */}
           </TaskTitle>
         )
       }}

@@ -29,10 +29,11 @@ const ButtonAdd = styled.div`
   font-size: large;
 `
 const Modal = styled.div`
-  position: absolute;
+  position: fixed;
   background: rgba(0, 0, 0, 0.3);
-  width: 100%;
-  height: 100%;
+  z-index: 2;
+  width: 100vw;
+  height: 100vh;
   top: 0;
   left: 0;
 `
@@ -51,47 +52,60 @@ const ModalContent = styled.div`
   align-items: center;
   border-radius: 4px;
 `
-const onDragEnd = (result, columns, setColumns) => {
-  if (!result.destination) return
-  const { source, destination } = result
-  if (source.droppableId !== destination.droppableId) {
-    const sourceColumn = columns[source.droppableId]
-    const destColumn = columns[destination.droppableId]
-    const sourceItems = [...sourceColumn.items]
-    const destItems = [...destColumn.items]
-    const [removed] = sourceItems.splice(source.index, 1)
-    destItems.splice(destination.index, 0, removed)
-    setColumns({
-      ...columns,
-      [source.droppableId]: {
-        ...sourceColumn,
-        items: sourceItems
-      },
-      [destination.droppableId]: {
-        ...destColumn,
-        items: destItems
-      }
-    })
-  } else {
-    const column = columns[source.droppableId]
-    const copiedItems = [...column.items]
-    // Remove the item from its original position
-    const [removed] = copiedItems.splice(source.index, 1)
-    copiedItems.splice(destination.index, 0, removed)
-    setColumns({
-      ...columns,
-      [source.droppableId]: {
-        ...column,
-        items: copiedItems
-      }
-    })
-  }
-}
+
 
 function KanbanBoard() {
-  const APIColumns = useTaskStore((state) => state.columnsFromBackend)
+  const columns = useTaskStore((state) => state.columnsFromBackend)
+  const setColumnsFromBackend = useTaskStore((state)=> state.setColumnsFromBackend)
+  const indexStatus = {
+    columnBacklog : 1,
+    columnTodo: 2,
+    columnProgress: 3,
+    columnReview: 4,
+    columnDone: 5
+  }
+  const onDragEnd = (result) => {
+    if (!result.destination) return
+    const { source, destination } = result
+    console.log(indexStatus[source.droppableId])
+    console.log(indexStatus[destination.droppableId])
+    if (source.droppableId !== destination.droppableId && indexStatus[source.droppableId]< indexStatus[destination.droppableId] ) {
+      const sourceColumn = columns[source.droppableId]
+      const destColumn = columns[destination.droppableId]
+      const sourceItems = [...sourceColumn.items]
+      const destItems = [...destColumn.items]
+      const [removed] = sourceItems.splice(source.index, 1)// [2, 1 ,3 ]
+      destItems.splice(destination.index, 0, removed)
+      setColumnsFromBackend({
+        ...columns,
+        [source.droppableId]: {
+          ...sourceColumn,
+          items: sourceItems
+        },
+        [destination.droppableId]: {
+          ...destColumn,
+          items: destItems
+        }
+      })
+    } else {
+      const column = columns[source.droppableId]
+      const copiedItems = [...column.items]
+      // Remove the item from its original position
+      const [removed] = copiedItems.splice(source.index, 1)
+      copiedItems.splice(destination.index, 0, removed)
+      setColumnsFromBackend({
+        ...columns,
+        [source.droppableId]: {
+          ...column,
+          items: copiedItems
+        }
+      })
+    }
+    console.log(result)
+  }
   // console.log(APIColumns)
-  const [columns, setColumns] = useState(APIColumns)
+  // const [columns, setColumns] = useState(APIColumns)
+  console.log(columns)
   console.log(columns)
   const addItemToColumn = useTaskStore((state) => state.addItemToColumn)
   const [show, setShow] = useState(false)
@@ -118,7 +132,7 @@ function KanbanBoard() {
           </ModalContent>
         </Modal>
       )}
-      <DragDropContext onDragEnd={(result) => onDragEnd(result, columns, setColumns)}>
+      <DragDropContext onDragEnd={onDragEnd}>
         {Object.entries(columns).map(([id, column]) => {
           return (
             <Container key={id}>

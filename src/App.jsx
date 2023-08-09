@@ -2,15 +2,17 @@ import React from 'react'
 import './App.css'
 import KanbanBoard from './components/KanbanBoard'
 import DatePickerExample from './components/DatePickerExample'
-import DatePickerComponent from './components/DatePickerComponent'
+import Date from './components/Date'
+import DateTask from './components/DateTask'
 
 function App() {
   return (
     <div>
       <h1>KanbanBoard</h1>
       <KanbanBoard/>
-      <DatePickerExample/>
-      <DatePickerComponent/>
+      {/* <DatePickerExample/> */}
+      {/* <Date/> */}
+      {/* <DateTask/> */}
     </div>
   )
 }
