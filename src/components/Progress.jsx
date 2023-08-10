@@ -2,9 +2,7 @@ import React, { useState } from 'react';
 import './Progress.css';
 
 function Progress({item}) {
-  // console.log(item)
   const [progress, setProgress] = useState(item); 
-  // Giả sử ban đầu là 0%
   const handleProgressChange = (event) => {
     const newProgress = parseInt(event.target.value, 10);
     setProgress(newProgress);

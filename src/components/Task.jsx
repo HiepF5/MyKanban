@@ -5,9 +5,7 @@ import trash from '../assets/trash-2.svg'
 import edit from '../assets/edit-btn.svg'
 import chevron from '../assets/chevron.svg'
 import chevronTop from '../assets/chevron-top.svg'
-import { useTaskStore } from '../../Store/TaskStore'
 import Progress from './Progress'
-import Date from './Date'
 import DateTask from './DateTask'
 const TaskTitle = styled.div`
   position: relative;
@@ -52,11 +50,6 @@ const ShowDetail = styled.button`
   }
 `
 export default function Task({ item, index }) {
-  // const formattedStartDate= useTaskStore((state)=>state.formattedStartDate(index))
-  // const formattedEndDate= useTaskStore((state)=>state.formattedEndDate(index))
-  // const currentDate = new Date()
-  // const [day, month, year] = [currentDate.getDate(), currentDate.getMonth() + 1, currentDate.getFullYear()]
-  // const time = `Ngày: ${day}, Tháng: ${month}, Năm: ${year}`
   const [show, setShow] = useState(false)
   const toggleShow = () => {
     setShow(!show)
@@ -87,14 +80,9 @@ export default function Task({ item, index }) {
               </div>
               <div> {item.content}</div>
             </TaskName>
-            {/* <div>Ngày bắt đầu : {formattedStartDate}</div>
-            <div>Ngày kết thúc : {formattedEndDate}</div> */}
             <DateTask startDateInput={item.startDate} endDateInput={item.endDate} />
             <div>Tiến độ xử lí: {item.progress}</div>
-            {/* {console.log(item)} */}
             <Progress item={item.progress} />
-            {/* <Date/> */}
-            {/* <Date/> */}
           </TaskTitle>
         )
       }}

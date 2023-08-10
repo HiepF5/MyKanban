@@ -52,8 +52,6 @@ const ModalContent = styled.div`
   align-items: center;
   border-radius: 4px;
 `
-
-
 function KanbanBoard() {
   const columns = useTaskStore((state) => state.columnsFromBackend)
   const setColumnsFromBackend = useTaskStore((state)=> state.setColumnsFromBackend)
@@ -67,6 +65,7 @@ function KanbanBoard() {
   const onDragEnd = (result) => {
     if (!result.destination) return
     const { source, destination } = result
+    console.log(result)
     console.log(indexStatus[source.droppableId])
     console.log(indexStatus[destination.droppableId])
     if (source.droppableId !== destination.droppableId && indexStatus[source.droppableId]< indexStatus[destination.droppableId] ) {
@@ -74,7 +73,7 @@ function KanbanBoard() {
       const destColumn = columns[destination.droppableId]
       const sourceItems = [...sourceColumn.items]
       const destItems = [...destColumn.items]
-      const [removed] = sourceItems.splice(source.index, 1)// [2, 1 ,3 ]
+      const [removed] = sourceItems.splice(source.index, 1)
       destItems.splice(destination.index, 0, removed)
       setColumnsFromBackend({
         ...columns,
@@ -90,7 +89,6 @@ function KanbanBoard() {
     } else {
       const column = columns[source.droppableId]
       const copiedItems = [...column.items]
-      // Remove the item from its original position
       const [removed] = copiedItems.splice(source.index, 1)
       copiedItems.splice(destination.index, 0, removed)
       setColumnsFromBackend({
@@ -103,10 +101,6 @@ function KanbanBoard() {
     }
     console.log(result)
   }
-  // console.log(APIColumns)
-  // const [columns, setColumns] = useState(APIColumns)
-  console.log(columns)
-  console.log(columns)
   const addItemToColumn = useTaskStore((state) => state.addItemToColumn)
   const [show, setShow] = useState(false)
   const [text, setText] = useState('')
@@ -119,7 +113,6 @@ function KanbanBoard() {
   }
   const handleChangeText = (event) => {
     setText(event.target.value)
-    console.log(text)
   }
   return (
     <Board>

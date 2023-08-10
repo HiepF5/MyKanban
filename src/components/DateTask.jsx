@@ -16,7 +16,6 @@ function DateTask({ startDateInput, endDateInput }) {
         setDateRange(update);
       }}
       withPortal
-      //  className="custom-datepicker" // Thêm lớp CSS tùy chỉnh cho DatePicker
     />
   );
 }
