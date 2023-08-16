@@ -24,14 +24,14 @@ const TaskList = styled.div`
   }};
   border: 1px solid #ccc;
 `
-export default function Column({ id, items, name }) {
+export default function Column({ id, tasks, name }) {
   return (
     <Droppable droppableId={id}>
       {(provided) => {
         return (
           <TaskList {...provided.droppableProps} ref={provided.innerRef} state={name}>
-            {items.map((item, index) => {
-              return <Task key={item.id} item={item} index={index}></Task>
+            {tasks.map((task, index) => {
+              return <Task key={task.id} task={task} index={index} id={id}></Task>
             })}
             {provided.placeholder}
           </TaskList>

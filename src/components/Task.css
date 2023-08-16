@@ -1,0 +1,16 @@
+.disabled {
+  pointer-events: none;
+  /* Hoặc */
+  /* opacity: 0.5; */
+  outline: none;
+  border: none;
+}
+.react-datepicker__portal {
+  
+}
+.react-datepicker {
+  
+}
+.react-datepicker__month-container {
+ 
+}
