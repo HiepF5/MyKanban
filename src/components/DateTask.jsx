@@ -1,11 +1,14 @@
-import React, { useState } from "react";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
-// import "./DateTask.css"; // Import tệp CSS vừa tạo
+import React, { useState } from 'react'
+import DatePicker from 'react-datepicker'
+import 'react-datepicker/dist/react-datepicker.css'
 
 function DateTask({ startDateInput, endDateInput }) {
-  const [dateRange, setDateRange] = useState([startDateInput, endDateInput]);
-  const [startDate, endDate] = dateRange;
+  const startDateInput2 = new Date(startDateInput)
+  const endDateInput2 = new Date(endDateInput);
+
+  const [dateRange, setDateRange] = useState([startDateInput2, endDateInput2])
+  console.log(dateRange)
+  const [startDate, endDate] = dateRange
 
   return (
     <DatePicker
@@ -13,11 +16,11 @@ function DateTask({ startDateInput, endDateInput }) {
       startDate={startDate}
       endDate={endDate}
       onChange={(update) => {
-        setDateRange(update);
+        setDateRange(update)
       }}
-      withPortal
+      disabled
     />
-  );
+  )
 }
 
-export default DateTask;
+export default DateTask

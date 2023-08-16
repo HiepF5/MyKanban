@@ -1,77 +1,15 @@
 import { create } from 'zustand'
 import { v4 as uuidv4 } from 'uuid'
 import { persist } from 'zustand/middleware'
-const initTasks = [
-  {
-    id: uuidv4(),
-    content: 'One',
-    title: 'First task',
-    isEditing: false,
-    startDate: new Date(2023, 7, 8),
-    endDate: new Date(2023, 9, 8),
-    progress: 10
-  },
-  {
-    id: uuidv4(),
-    content: 'Two',
-    title: 'Second task',
-    isEditing: false,
-    startDate: new Date(2022, 7, 8),
-    endDate: new Date(2023, 9, 8),
-    progress: 20
-  },
-  {
-    id: uuidv4(),
-    content: 'Three',
-    title: 'Third task',
-    isEditing: false,
-    startDate: new Date(2023, 7, 8),
-    endDate: new Date(2023, 9, 8),
-    progress: 30
-  },
-  {
-    id: uuidv4(),
-    content: 'Fourth',
-    title: 'Fourth task',
-    isEditing: false,
-    startDate: new Date(2023, 7, 8),
-    endDate: new Date(2023, 9, 8),
-    progress: 40
-  },
-  {
-    id: uuidv4(),
-    content: 'Fifth',
-    title: 'Fifth task',
-    isEditing: false,
-    startDate: new Date(2023, 7, 8),
-    endDate: new Date(2023, 9, 8),
-    progress: 50
-  }
-]
+import axios from 'axios'
+
 const taskStore = (set, get) => ({
-  initTasks,
-  columns: {
-    columnBacklog: {
-      name: 'Backlog',
-      tasks: [...initTasks] // Sao chép mảng initTasks vào cột 'Backlog'
-    },
-    columnTodo: {
-      name: 'To-Do',
-      tasks: []
-    },
-    columnProgress: {
-      name: 'In Progress',
-      tasks: []
-    },
-    columnReview: {
-      name: 'Review',
-      tasks: []
-    },
-    columnDone: {
-      name: 'Done',
-      tasks: []
-    }
+  columns:{},
+  fetch: async (url)=>{
+    const response = await axios.get(url)
+    set({columns: response.data})
   },
+  
   // Hàm cập nhật columns
   setColumns: (columns) => set({ columns: columns }),
   // Chức năng thêm task

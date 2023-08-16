@@ -1,0 +1,70 @@
+{
+  "columns": {
+    "columnBacklog": {
+      "name": "Backlog",
+      "tasks": [
+        {
+          "id": "1",
+          "content": "One",
+          "title": "First task",
+          "isEditing": false,
+          "startDate": "2023-08-08T00:00:00.000Z",
+          "endDate": "2023-10-08T00:00:00.000Z",
+          "progress": 10
+        },
+        {
+          "id": "2",
+          "content": "Two",
+          "title": "Second task",
+          "isEditing": false,
+          "startDate": "2023-08-08T00:00:00.000Z",
+          "endDate": "2023-10-08T00:00:00.000Z",
+          "progress": 20
+        },
+        {
+          "id": "3",
+          "content": "Three",
+          "title": "Third task",
+          "isEditing": false,
+          "startDate": "2023-08-08T00:00:00.000Z",
+          "endDate": "2023-10-08T00:00:00.000Z",
+          "progress": 30
+        },
+        {
+          "id": "4",
+          "content": "Fourth",
+          "title": "Fourth task",
+          "isEditing": false,
+          "startDate": "2023-08-08T00:00:00.000Z",
+          "endDate": "2023-10-08T00:00:00.000Z",
+          "progress": 40
+        },
+        {
+          "id": "5",
+          "content": "Fifth",
+          "title": "Fifth task",
+          "isEditing": false,
+          "startDate": "2023-08-08T00:00:00.000Z",
+          "endDate": "2023-12-08T00:00:00.000Z",
+          "progress": 50
+        }
+      ]
+    },
+    "columnTodo": {
+      "name": "To-Do",
+      "tasks": []
+    },
+    "columnProgress": {
+      "name": "In Progress",
+      "tasks": []
+    },
+    "columnReview": {
+      "name": "Review",
+      "tasks": []
+    },
+    "columnDone": {
+      "name": "Done",
+      "tasks": []
+    }
+  }
+}

@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import './Progress.css';
 
-function Progress({item}) {
-  const [progress, setProgress] = useState(item); 
+function Progress({progressTask}) {
+  const [progress, setProgress] = useState(progressTask); 
   const handleProgressChange = (event) => {
     const newProgress = parseInt(event.target.value, 10);
     setProgress(newProgress);
@@ -16,13 +16,13 @@ function Progress({item}) {
   return (
     <div className="App">
       <p>Progress Bar</p>
-      <input
+      {/* <input
         type="range"
         min="0"
         max="100"
         value={progress}
         onChange={handleProgressChange}
-      />
+      /> */}
       <div className="progress-bar">
         <div className="progress" style={progressBarStyle} ></div>
       </div>

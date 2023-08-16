@@ -51,3 +51,8 @@
 .react-datepicker-popper {
   z-index: 1001; /* Đảm bảo lịch nằm trên các phần tử khác */
 }
+
+.small-datepicker {
+  font-size: 12px; /* Điều chỉnh kích thước font chữ */
+  width: 150px;   /* Điều chỉnh chiều rộng */
+}

@@ -61,7 +61,6 @@ export default function Task({ task, index, id }) {
     setShow(!show)
   }
   const handleEdit = (ColumnId, TaskId) => {
-    console.log('edit')
     toggleEdit(ColumnId, TaskId)
   }
   const saveEdit = (ColumnId, task) => {
@@ -114,8 +113,7 @@ export default function Task({ task, index, id }) {
                 />
               </TaskName>
               <DateTask startDateInput={task.startDate} endDateInput={task.endDate} />
-              <div>Tiến độ xử lí: {task.progress}</div>
-              <Progress task={task.progress} />
+              <Progress progressTask={task.progress} />
             </TaskTitle>
           </>
         )

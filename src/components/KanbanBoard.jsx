@@ -8,6 +8,7 @@ import { styled } from 'styled-components'
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 import './KanbanBoard.css' // Import tệp CSS vừa tạo
+import { useEffect } from 'react'
 
 const Board = styled.div`
   display: flex;
@@ -64,6 +65,7 @@ const ModalDate = styled.div`
 `
 function KanbanBoard() {
   const columns = useTaskStore((state) => state.columns)
+  console.log(columns)
   const setColumns = useTaskStore((state) => state.setColumns)
   const indexStatus = {
     columnBacklog: 1,
