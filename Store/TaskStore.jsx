@@ -74,6 +74,7 @@ const taskStore = (set, get) => ({
   },
   // Thêm column mới vào store
   createColumn: (title) => {
+    const updatedColumns = { ...get().columns }
     const idColumn = 'column' + title
     const newColumn = {
       name: title,
