@@ -9,6 +9,7 @@ import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 import './KanbanBoard.css' // Import tệp CSS vừa tạo
 import { useEffect } from 'react'
+import add from '../assets/add.svg'
 
 const Board = styled.div`
   display: flex;
@@ -63,10 +64,20 @@ const ModalContent = styled.div`
 const ModalDate = styled.div`
   position: relative !important;
 `
-function KanbanBoard() {
+const TaskImg = styled.img`
+  height: 30px;
+  cursor: pointer;
+  padding: 3px 6px;
+  outline: none;
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`
+function KanbanBoard({ keySearch }) {
   const columns = useTaskStore((state) => state.columns)
-  console.log(columns)
   const setColumns = useTaskStore((state) => state.setColumns)
+  const [showAddColumn, setShowAddColumn] = useState(false)
   const indexStatus = {
     columnBacklog: 1,
     columnTodo: 2,
@@ -117,11 +128,13 @@ function KanbanBoard() {
     console.log(result)
   }
   const addTask = useTaskStore((state) => state.addTask)
+  const createColumn = useTaskStore((state) => state.createColumn)
   const [show, setShow] = useState(false)
   const [title, setTitle] = useState('')
   const [content, setContent] = useState('')
   const [dateRange, setDateRange] = useState([null, null])
   const [startDate, endDate] = dateRange
+  const [newColumn, setNewColumn] = useState('')
   const handleShow = () => {
     setShow(true)
   }
@@ -146,9 +159,19 @@ function KanbanBoard() {
   const handleChangContent = (event) => {
     setContent(event.target.value)
   }
+  const handleAddColumnShow = () => {
+    setShowAddColumn(!showAddColumn)
+  }
+  const saveColumn = () => {
+    createColumn(newColumn)
+    setShowAddColumn(!showAddColumn)
+  }
   return (
     <Board>
-      <ButtonAdd onClick={handleShow}>Add</ButtonAdd>
+      <div>
+        <ButtonAdd onClick={handleShow}>Add</ButtonAdd>
+      </div>
+
       {show && (
         <Modal>
           <ModalContent>
@@ -180,12 +203,23 @@ function KanbanBoard() {
             <Container key={id}>
               <h2>{column.name}</h2>
               <ListColumn>
-                <Column key={id} id={id} tasks={column.tasks} name={column.name}></Column>
+                <Column key={id} id={id} tasks={column.tasks} name={column.name} keySearch={keySearch}></Column>
               </ListColumn>
             </Container>
           )
         })}
       </DragDropContext>
+      <div>
+        <ButtonAdd onClick={handleAddColumnShow}>
+          <TaskImg src={add}></TaskImg>
+        </ButtonAdd>
+        {showAddColumn && (
+          <>
+            <input placeholder='Thêm Column' onChange={(e) => setNewColumn(e.target.value)} value={newColumn} />
+            <button onClick={saveColumn}>save</button>
+          </>
+        )}
+      </div>
     </Board>
   )
 }

@@ -7,7 +7,6 @@ function DateTask({ startDateInput, endDateInput }) {
   const endDateInput2 = new Date(endDateInput);
 
   const [dateRange, setDateRange] = useState([startDateInput2, endDateInput2])
-  console.log(dateRange)
   const [startDate, endDate] = dateRange
 
   return (
