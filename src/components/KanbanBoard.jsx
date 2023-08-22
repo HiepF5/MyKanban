@@ -165,6 +165,7 @@ function KanbanBoard({ keySearch }) {
   const saveColumn = () => {
     createColumn(newColumn)
     setShowAddColumn(!showAddColumn)
+    setNewColumn('')
   }
   return (
     <Board>

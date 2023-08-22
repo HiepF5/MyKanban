@@ -82,11 +82,49 @@ const taskStore = (set, get) => ({
     }
     set({
       columns: {
+        ...updatedColumns,
         [idColumn]: {
           ...newColumn
         }
       }
     })
-  }
+  },
+  // Function to delete all tasks in a column
+  deleteAllTasksInColumn: (columnKey) => {
+    const updatedColumns = { ...get().columns }
+    updatedColumns[columnKey].tasks = []
+    set({ columns: updatedColumns })
+  },
+  countTasksInColumn: (columnKey) => {
+    const updatedColumns = { ...get().columns }
+    return updatedColumns[columnKey].tasks.length
+  },
+  // Tìm Task quá hạn hiện tại
+  getOverdueTasks: (columnKey) => {
+    const tasks = get().columns[columnKey].tasks
+    const overdueTasks = []
+
+    for (const task of tasks) {
+      if (task.endDate < Date.now()) {
+        overdueTasks.push(task)
+      }
+    }
+    console.log(overdueTasks)
+    return overdueTasks
+    
+  },
+  // Cập nhật tiến độ của công việc
+  updateTaskProgress: (columnKey, taskId, newProgress) => {
+    const updatedColumns = { ...get().columns };
+    const taskIndex = updatedColumns[columnKey].tasks.findIndex(task => task.id === taskId);
+    
+    if (taskIndex !== -1) {
+      updatedColumns[columnKey].tasks[taskIndex] = {
+        ...updatedColumns[columnKey].tasks[taskIndex],
+        progress: newProgress,
+      };
+      set({ columns: updatedColumns });
+    }
+  },
 })
 export const useTaskStore = create(taskStore)

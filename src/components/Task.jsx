@@ -10,6 +10,7 @@ import Progress from './Progress'
 import DateTask from './DateTask'
 import { useTaskStore } from '../../Store/TaskStore'
 import './Task.css'
+import InformationTask from './InformationTask'
 const TaskTitle = styled.div`
   position: relative;
   color: white;
@@ -56,6 +57,7 @@ export default function Task({ task, index, id }) {
   const toggleEdit = useTaskStore((state) => state.toggleEdit)
   const editTask = useTaskStore((state) => state.editTask)
   const [show, setShow] = useState(false)
+  const [showInformation, setShowInformation] = useState(false)
   const [contentInput, setContentInput] = useState(task.content)
   const toggleShow = () => {
     setShow(!show)
@@ -78,12 +80,17 @@ export default function Task({ task, index, id }) {
   const handChangContent = (e) => {
     setContentInput(e.target.value)
   }
+  const handleShowInformation = () => {
+    setShowInformation(true)
+  }
   return (
     <Draggable draggableId={task.id} index={index}>
       {(provided, snapshot) => {
         return (
           <>
+            {showInformation && <InformationTask setShowInformation={setShowInformation} task={task}/>}
             <TaskTitle
+              onClick={handleShowInformation}
               ref={provided.innerRef}
               {...provided.draggableProps}
               {...provided.dragHandleProps}
@@ -113,7 +120,7 @@ export default function Task({ task, index, id }) {
                 />
               </TaskName>
               <DateTask startDateInput={task.startDate} endDateInput={task.endDate} />
-              <Progress progressTask={task.progress} />
+              <Progress ColumnId={id} task={task} />
             </TaskTitle>
           </>
         )

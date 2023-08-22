@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { Droppable } from 'react-beautiful-dnd'
 import Task from './Task'
 import sort from '../assets/sort.svg'
+import deleteAll from '../assets/delete.svg'
 import { styled } from 'styled-components'
 import { useTaskStore } from '../../Store/TaskStore'
 const TaskList = styled.div`
@@ -10,6 +11,7 @@ const TaskList = styled.div`
   padding: 4px;
   width: 250px;
   min-height: 600px;
+  border-radius: 8px;
   background-color: ${(props) => {
     switch (props.state) {
       case 'Backlog':
@@ -43,6 +45,8 @@ const TaskContainer = styled.div`
 export default function Column({ id, tasks, name, keySearch }) {
   const sortTasksByContent = useTaskStore((state) => state.sortTasksByContent)
   const sortTasksDecrement = useTaskStore((state) => state.sortTasksDecrement)
+  const deleteAllTasksInColumn = useTaskStore((state) => state.deleteAllTasksInColumn)
+  const countTasksInColumn = useTaskStore((state) => state.countTasksInColumn)
   const [toggleSort, setToggleSort] = useState(false)
   const handSort = () => {
     if (toggleSort) {
@@ -54,6 +58,10 @@ export default function Column({ id, tasks, name, keySearch }) {
     setToggleSort(!toggleSort);
     console.log(toggleSort)
   };
+  const handDeleteAll = ()=>{
+    console.log('click')
+    deleteAllTasksInColumn(id);
+  }
   return (
     <>
       <Droppable droppableId={id}>
@@ -63,12 +71,13 @@ export default function Column({ id, tasks, name, keySearch }) {
               <TaskList {...provided.droppableProps} ref={provided.innerRef} state={name}>
                 <TaskContainer>
                   <TaskImg src={sort} onClick={handSort} />
+                  <TaskImg src={deleteAll} onClick={handDeleteAll} />
                 </TaskContainer>
                 {tasks.map((task, index) => {
                   if (task.title.toLowerCase().includes(keySearch.toLowerCase()))
                     return <Task key={task.id} task={task} index={index} id={id}></Task>
                 })}
-                {provided.placeholder}
+               <div>Number of tasks: {countTasksInColumn(id)}</div>
               </TaskList>
             </>
           )
