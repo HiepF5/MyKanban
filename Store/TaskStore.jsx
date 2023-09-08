@@ -32,6 +32,7 @@ const taskStore = (set, get) => ({
     const taskIndex = updatedColumns[columnKey].tasks.findIndex((task) => task.id === updatedTask.id)
     if (taskIndex !== -1) {
       updatedColumns[columnKey].tasks[taskIndex] = updatedTask
+      console.log(updatedColumns)
       set({ columns: updatedColumns })
     }
   },

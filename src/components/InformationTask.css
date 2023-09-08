@@ -15,16 +15,14 @@
 .container_info {
   display: flex;
   background-color: rgb(255, 255, 255);
-  width: 50%;
-  flex-direction: column;
-  align-items: center;
-  
+  width: 70%;
+  flex-direction: column;  
 }
 .container_action {
   display: flex;
   flex-direction: column;
   background-color: blueviolet;
-  width: 50%;
+  width: 30%;
   align-items: center;
 }
 .btn_save{
@@ -44,4 +42,9 @@
 .img_action{
   height: 1.25rem;
   cursor: pointer;
+}
+.btn_action{
+  background-color: white;
+  padding: 11px 27px;
+  
 }

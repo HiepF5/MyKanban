@@ -6,6 +6,7 @@ import edit from '../assets/edit-btn.svg'
 import chevron from '../assets/chevron.svg'
 import chevronTop from '../assets/chevron-top.svg'
 import save from '../assets/save.svg'
+import view from '../assets/view.svg'
 import Progress from './Progress'
 import DateTask from './DateTask'
 import { useTaskStore } from '../../Store/TaskStore'
@@ -52,6 +53,18 @@ const ShowDetail = styled.button`
     outline: none;
   }
 `
+const ShowInfo = styled.button`
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  padding: 3px 6px;
+  outline: none;
+  border: none;
+  &:active,
+  &:focus {
+    outline: none;
+  }
+`
 export default function Task({ task, index, id }) {
   const removeTask = useTaskStore((state) => state.removeTask)
   const toggleEdit = useTaskStore((state) => state.toggleEdit)
@@ -65,6 +78,7 @@ export default function Task({ task, index, id }) {
   const handleEdit = (ColumnId, TaskId) => {
     toggleEdit(ColumnId, TaskId)
   }
+  console.log(task)
   const saveEdit = (ColumnId, task) => {
     const newTask = {
       id: task.id,
@@ -88,9 +102,8 @@ export default function Task({ task, index, id }) {
       {(provided, snapshot) => {
         return (
           <>
-            {showInformation && <InformationTask setShowInformation={setShowInformation} task={task}/>}
+            {showInformation && <InformationTask setShowInformation={setShowInformation} task={task} id={id} />}
             <TaskTitle
-              onClick={handleShowInformation}
               ref={provided.innerRef}
               {...provided.draggableProps}
               {...provided.dragHandleProps}
@@ -102,6 +115,9 @@ export default function Task({ task, index, id }) {
               }}
             >
               <TaskTitleTask>{task.title}</TaskTitleTask>
+              <ShowInfo>
+                <TaskImg src={view} onClick={handleShowInformation} />
+              </ShowInfo>
               <ShowDetail onClick={toggleShow}>
                 {show ? <TaskImg src={chevron} /> : <TaskImg src={chevronTop} />}
               </ShowDetail>
